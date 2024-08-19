@@ -259,7 +259,8 @@ if menu=="Bus Routes":
     
     #ANDHRA
     if state=="Andhra Pradesh":
-        k=st.selectbox("List of routes",andhra)
+        with col2:
+            k=st.selectbox("List of routes",andhra)
         
         #CREATE A FUNCTION FOR CONNNECTION TO SQL FILTERATION
         
@@ -329,7 +330,8 @@ if menu=="Bus Routes":
     #PUNJAB 
     
     if state=="Punjab":
-        k=st.selectbox("List of routes",punjab)
+        with col2:
+            k=st.selectbox("List of routes",punjab)
         
         #CREATE A FUNCTION FOR CONNNECTION TO SQL FILTERATION
         
@@ -399,7 +401,8 @@ if menu=="Bus Routes":
     #ASSAM
     
     if state=="Assam":
-        k=st.selectbox("List of routes",assam)
+        with col2:
+           k=st.selectbox("List of routes",assam)
         
         #CREATE A FUNCTION FOR CONNNECTION TO SQL FILTERATION
         
@@ -468,7 +471,8 @@ if menu=="Bus Routes":
         #TELUNGANA
     
     if state=="Telungana":
-        k=st.selectbox("List of routes",telungana)
+        with col2:
+           k=st.selectbox("List of routes",telungana)
         
         #CREATE A FUNCTION FOR CONNNECTION TO SQL FILTERATION
         
@@ -535,7 +539,8 @@ if menu=="Bus Routes":
     
     #HARYANA
     if state=="Haryana":
-        k=st.selectbox("List of routes",haryana)
+        with col2:
+           k=st.selectbox("List of routes",haryana)
         
         #CREATE A FUNCTION FOR CONNNECTION TO SQL FILTERATION
         
@@ -606,7 +611,8 @@ if menu=="Bus Routes":
         #GOA 
         
     if state=="Goa":
-        k=st.selectbox("List of routes",goa)
+        with col2:  
+          k=st.selectbox("List of routes",goa)
         
         #CREATE A FUNCTION FOR CONNNECTION TO SQL FILTERATION
         
@@ -674,7 +680,8 @@ if menu=="Bus Routes":
     
     #RAJASTHAN
     if state=="Rajasthan":
-        k=st.selectbox("List of routes",rajasthan)
+        with col2:
+           k=st.selectbox("List of routes",rajasthan)
         
         #CREATE A FUNCTION FOR CONNNECTION TO SQL FILTERATION
         
@@ -743,7 +750,8 @@ if menu=="Bus Routes":
     
     #UTTAR PRADESH
     if state=="Uttar Pradesh":
-        k=st.selectbox("List of routes",up)
+        with col2:
+           k=st.selectbox("List of routes",up)
         
         #CREATE A FUNCTION FOR CONNNECTION TO SQL FILTERATION
         
@@ -811,7 +819,8 @@ if menu=="Bus Routes":
         
     #SOUTH BENGAL 
     if state=="South Bengal":
-        k=st.selectbox("List of routes",sbengal)
+        with col2:   
+           k=st.selectbox("List of routes",sbengal)
         
         #CREATE A FUNCTION FOR CONNNECTION TO SQL FILTERATION
         
@@ -880,7 +889,8 @@ if menu=="Bus Routes":
     
     #WEST BENGAL
     if state=="West Bengal":
-        k=st.selectbox("List of routes",wbengal)
+        with col2:
+           k=st.selectbox("List of routes",wbengal)
         
         #CREATE A FUNCTION FOR CONNNECTION TO SQL FILTERATION
         
