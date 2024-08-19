@@ -196,7 +196,7 @@ if menu=="Bus Routes":
         #CREATE A FUNCTION FOR CONNNECTION TO SQL FILTERATION
         
         def type_and_fare(bus_type, fare_range,rate_range):
-            conn=mysql.connector.connect(host="localhost",user="root",password="Root$$123",database="project",port=3306)
+            conn=mysql.connector.connect(host="localhost",user="root",password="",database="project")
             my_cursor=conn.cursor()
             
             #filtration for rating
@@ -264,7 +264,7 @@ if menu=="Bus Routes":
         #CREATE A FUNCTION FOR CONNNECTION TO SQL FILTERATION
         
         def type_and_fare(bus_type, fare_range,rate_range):
-            conn=mysql.connector.connect(host="localhost",user="root",password="Root$$123",database="project",port=3306)
+            conn=mysql.connector.connect(host="localhost",user="root",password="",database="project")
             my_cursor=conn.cursor()
             
             #filtration for rating
@@ -334,7 +334,7 @@ if menu=="Bus Routes":
         #CREATE A FUNCTION FOR CONNNECTION TO SQL FILTERATION
         
         def type_and_fare(bus_type, fare_range,rate_range):
-            conn=mysql.connector.connect(host="localhost",user="root",password="Root$$123",database="project",port=3306)
+            conn=mysql.connector.connect(host="localhost",user="root",password="",database="project")
             my_cursor=conn.cursor()
             
             #filtration for rating
@@ -404,7 +404,7 @@ if menu=="Bus Routes":
         #CREATE A FUNCTION FOR CONNNECTION TO SQL FILTERATION
         
         def type_and_fare(bus_type, fare_range,rate_range):
-            conn=mysql.connector.connect(host="localhost",user="root",password="Root$$123",database="project",port=3306)
+            conn=mysql.connector.connect(host="localhost",user="root",password="",database="project")
             my_cursor=conn.cursor()
             
             #filtration for rating
@@ -473,7 +473,7 @@ if menu=="Bus Routes":
         #CREATE A FUNCTION FOR CONNNECTION TO SQL FILTERATION
         
         def type_and_fare(bus_type, fare_range,rate_range):
-            conn=mysql.connector.connect(host="localhost",user="root",password="Root$$123",database="project",port=3306)
+            conn=mysql.connector.connect(host="localhost",user="root",password="",database="project")
             my_cursor=conn.cursor()
             
             #filtration for rating
@@ -540,7 +540,7 @@ if menu=="Bus Routes":
         #CREATE A FUNCTION FOR CONNNECTION TO SQL FILTERATION
         
         def type_and_fare(bus_type, fare_range,rate_range):
-            conn=mysql.connector.connect(host="localhost",user="root",password="Root$$123",database="project",port=3306)
+            conn=mysql.connector.connect(host="localhost",user="root",password="",database="project")
             my_cursor=conn.cursor()
             
             #filtration for rating
@@ -611,7 +611,7 @@ if menu=="Bus Routes":
         #CREATE A FUNCTION FOR CONNNECTION TO SQL FILTERATION
         
         def type_and_fare(bus_type, fare_range,rate_range):
-            conn=mysql.connector.connect(host="localhost",user="root",password="Root$$123",database="project",port=3306)
+            conn=mysql.connector.connect(host="localhost",user="root",password="",database="project")
             my_cursor=conn.cursor()
             
             #filtration for rating
@@ -679,7 +679,7 @@ if menu=="Bus Routes":
         #CREATE A FUNCTION FOR CONNNECTION TO SQL FILTERATION
         
         def type_and_fare(bus_type, fare_range,rate_range):
-            conn=mysql.connector.connect(host="localhost",user="root",password="Root$$123",database="project",port=3306)
+            conn=mysql.connector.connect(host="localhost",user="root",password="",database="project")
             my_cursor=conn.cursor()
             
             #filtration for rating
@@ -748,7 +748,7 @@ if menu=="Bus Routes":
         #CREATE A FUNCTION FOR CONNNECTION TO SQL FILTERATION
         
         def type_and_fare(bus_type, fare_range,rate_range):
-            conn=mysql.connector.connect(host="localhost",user="root",password="Root$$123",database="project",port=3306)
+            conn=mysql.connector.connect(host="localhost",user="root",password="",database="project")
             my_cursor=conn.cursor()
             
             #filtration for rating
@@ -816,7 +816,7 @@ if menu=="Bus Routes":
         #CREATE A FUNCTION FOR CONNNECTION TO SQL FILTERATION
         
         def type_and_fare(bus_type, fare_range,rate_range):
-            conn=mysql.connector.connect(host="localhost",user="root",password="Root$$123",database="project",port=3306)
+            conn=mysql.connector.connect(host="localhost",user="root",password="",database="project")
             my_cursor=conn.cursor()
             
             #filtration for rating
@@ -885,7 +885,7 @@ if menu=="Bus Routes":
         #CREATE A FUNCTION FOR CONNNECTION TO SQL FILTERATION
         
         def type_and_fare(bus_type, fare_range,rate_range):
-            conn=mysql.connector.connect(host="localhost",user="root",password="Root$$123",database="project",port=3306)
+            conn=mysql.connector.connect(host="localhost",user="root",password="",database="project")
             my_cursor=conn.cursor()
             
             #filtration for rating
