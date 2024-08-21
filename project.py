@@ -217,9 +217,10 @@ if menu=="Home":
     st.altair_chart(chart,use_container_width=True)
         
     #altair
+    # Top panel is a scatter plot of Total_duration vs Price
     brush = alt.selection_interval(encodings=['x'])
 
-    # Define the click selection for interactivity
+# Define the click selection for interactivity
     click = alt.selection_single(encodings=['y'])
 
     # Top panel is a scatter plot of Total_duration vs Price
@@ -236,25 +237,21 @@ if menu=="Home":
         .add_selection(brush)
         .transform_filter(click)
     )
-   
-    st.markdown("""
-                <br><br><br>""",unsafe_allow_html=True)
 
     # Bottom panel is a bar chart of Bus_type
     bars = (
-    alt.Chart(dfbus)
-    .mark_bar()
-    .encode(
-        y="count():Q",
-        x="Bus_type:N",
-        color=alt.condition(click, alt.Color('Bus_type:N', legend=None), alt.value("lightgray")),
+        alt.Chart(dfbus)
+        .mark_bar()
+        .encode(
+            y="Bus_type:N",
+            x="count():Q",
+            color=alt.condition(click, alt.Color('Bus_type:N', legend=None), alt.value("lightgray")),
+        )
+        .transform_filter(brush)
+        .properties(width=300, height=700)
+        .add_selection(click)
     )
-    .transform_filter(brush)
-    .properties(width=550)
-    .add_selection(click)
-    )
-    
-    # Combine the charts
+        # Combine the charts
     chart = alt.vconcat(points, bars, title="Bus Data Analysis")
 
     # Display the chart in Streamlit
