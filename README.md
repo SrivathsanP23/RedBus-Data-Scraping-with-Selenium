@@ -7,9 +7,16 @@
 
 <h1><u>Run The Code:</u></h1>
 <br>
-<p>Use the following code:</p>
+
 
 <h1><code>Streamlit run project.py</code></h1>
+
+
+<h1>Hint: </h1>
+<h3><p>use XPATH for scraping as it offers many features and is flexible</p></h3> <br>
+<h2><code>yourdriver.find_elements(By.XPATH,"//div[@class='']")</code></h2>
+<br>
+<p>Actionchains- help to simulate keyboard inputs , scrolling and other automation processes for execution</p>
 
 
 ![image](https://github.com/user-attachments/assets/71c79471-37b8-409b-82cc-14997f91ac3a)
