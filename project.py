@@ -5,6 +5,7 @@ from streamlit_option_menu import option_menu  #used for selecting an option fro
 import plotly.express as px 
 import plotly.graph_objects as go
 from tabulate import tabulate
+import altair as alt
 
 #each bus we have to filter
 #now we have to take route_name from each dataframe and then append to list
@@ -87,6 +88,36 @@ for i,r in df_wb.iterrows():
 
 #setting streamlit page
 st.set_page_config(layout="wide",page_icon=":material/directions_bus:",page_title="RedBus Project",initial_sidebar_state="expanded")
+st.markdown(
+    f"""
+    <style>
+    .stApp {{
+        background-image: url("https://images.hdqwalls.com/wallpapers/bus-retro-56.jpg");
+        background-size: cover; /* Ensures the image covers the entire container */
+        background-position: center; /* Centers the image */
+        background-repeat: no-repeat; /* Prevents the image from repeating */
+        background-attachment: fixed; /* Fixes the image in place when scrolling */
+        height: 100vh; /* Sets the height to 100% of the viewport height */
+        width: 100vw; /* Sets the width to 100% of the viewport width */
+    }}
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+st.markdown(
+    f"""
+    <style>
+    [data-testid="stSidebar"] {{
+        background-color: #1e1c1c00; /* Replace with your desired color */
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }}
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
 st.markdown(
     """
@@ -154,7 +185,8 @@ if menu=="Home":
     # Display the plot in Streamlit
     st.plotly_chart(fig)
     
-    st.text("")
+    st.markdown("""
+                <br><br>""",unsafe_allow_html=True)
     
     labels = dfbus['Seats_Available']
     values = dfbus['Ratings']
@@ -167,11 +199,71 @@ if menu=="Home":
     )
     st.plotly_chart(fig2)
     
+    st.markdown("""
+                <br><br>""",unsafe_allow_html=True)
+    
+    
+    
+    dfbus = pd.read_csv("BusDetails/dfbus.csv")
+
+    # Create an Altair chart
+    chart = alt.Chart(dfbus).mark_circle().encode(
+        y='Price:Q',               # 'Price' as a quantitative (float) field
+        x='Total_duration:N',      # 'total_duration' as a nominal (string) field
+        color='Route_name:N',          # Adjust this to the appropriate categorical column in your data
+    ).interactive()
+
+        # Display the chart
+    st.altair_chart(chart,use_container_width=True)
+        
+    #altair
+    brush = alt.selection_interval(encodings=['x'])
+
+    # Define the click selection for interactivity
+    click = alt.selection_single(encodings=['y'])
+
+    # Top panel is a scatter plot of Total_duration vs Price
+    points = (
+        alt.Chart(dfbus)
+        .mark_point()
+        .encode(
+            alt.X("Total_duration:N", title="Total Duration"),
+            alt.Y("Price:Q", title="Price"),
+            color=alt.condition(brush, "Bus_type:N", alt.value("lightgray")),
+            size=alt.Size("Price:Q", scale=alt.Scale(range=[5, 200])),
+        )
+        .properties(width=550, height=300)
+        .add_selection(brush)
+        .transform_filter(click)
+    )
+   
+    st.markdown("""
+                <br><br><br>""",unsafe_allow_html=True)
+
+    # Bottom panel is a bar chart of Bus_type
+    bars = (
+    alt.Chart(dfbus)
+    .mark_bar()
+    .encode(
+        y="count():Q",
+        x="Bus_type:N",
+        color=alt.condition(click, alt.Color('Bus_type:N', legend=None), alt.value("lightgray")),
+    )
+    .transform_filter(brush)
+    .properties(width=550)
+    .add_selection(click)
+    )
+    
+    # Combine the charts
+    chart = alt.vconcat(points, bars, title="Bus Data Analysis")
+
+    # Display the chart in Streamlit
+    st.altair_chart(chart, use_container_width=True)
     
     
 if menu=="Bus Routes":
     
-    st.title(" :blue[:material/filter_alt:] :red[Dynamic Filtering of Data]")
+    st.title(":green[:material/filter_alt:]    :blue[Dynamic Filtering of Data]")
     
     
     col1,col2=st.columns(2)
