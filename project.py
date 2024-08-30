@@ -109,12 +109,13 @@ st.markdown(
     f"""
     <style>
     [data-testid="stSidebar"] {{
-        background-color: #1e1c1c00; /* Replace with your desired color */
+        background-color: #60191900; /* Replace with your desired color */
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
     }}
     </style>
+    
     """,
     unsafe_allow_html=True
 )
@@ -134,8 +135,7 @@ st.markdown(
         font-size: 20px !important;
     }
     </style>
-    """,
-    unsafe_allow_html=True
+    """,unsafe_allow_html=True
 )
 
 
@@ -156,7 +156,8 @@ with st.sidebar:
         menu_icon="cast", 
         default_index=0,
         styles={
-            "icon":{"font-size":"25px"}
+            "icon":{"font-size":"21px"},
+            "nav-link-selected": {"background-color": "#0b0bdd","font-size":"22px"}
         }
     )
 
@@ -270,7 +271,7 @@ if menu=="Bus Routes":
     with col2:
         select_type=st.selectbox("choose bus type",["A/C","NON A/C","sleeper","semi-sleeper","seater","others"])
     with col1:
-        fare = st.number_input("Enter fare", min_value=40, max_value=5000, value=40, step=1)
+        fare = st.number_input("Enter fare", min_value=40, max_value=5000, value=40, step=50)
         #select_fare = st.number_input("Enter bus fare", min_value=40, max_value=5000, value=40, step=1)
     with col2:
         select_rating = st.slider("Choose rating", min_value=1, max_value=5, value=5, step=1)
