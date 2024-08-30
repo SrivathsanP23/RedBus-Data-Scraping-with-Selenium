@@ -157,7 +157,7 @@ with st.sidebar:
         default_index=0,
         styles={
             "icon":{"font-size":"21px"},
-            "nav-link-selected": {"background-color": "#0b0bdd","font-size":"22px"}
+            # "nav-link-selected": {"background-color": "#0b0bdd","font-size":"20px"}
         }
     )
 
@@ -166,7 +166,7 @@ if menu=="Home":
     st.title(":red[:material/analytics:] :green[Redbus Data Scraping with Selenium  & Dynamic Filtering using Streamlit]")
     st.text("")
     st.subheader(" ")
-    st.markdown(""" ### :violet[:material/tooltip:] :red[Objective of the Project]
+    st.markdown(""" ### :violet[:material/tooltip:] :red[*Objective of the Project*]
 
                 To Scrape the Data from Redbus Website and to create a user interface and 
      dynamic filtration of data using streamlit and SQL 
