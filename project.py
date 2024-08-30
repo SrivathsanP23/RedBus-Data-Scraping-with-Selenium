@@ -268,11 +268,12 @@ if menu=="Bus Routes":
         state=st.selectbox("List of States",["Kerala", "Andhra Pradesh", "Telungana", "Goa", "Rajasthan", "Punjab",
                                           "South Bengal", "Haryana", "Assam", "Uttar Pradesh", "West Bengal"])
     with col2:
-        select_type=st.selectbox("choose bus type",["sleeper","semi-sleeper","seater","others"])
+        select_type=st.selectbox("choose bus type",["A/C","NON A/C","sleeper","semi-sleeper","seater","others"])
     with col1:
-        select_fare=st.selectbox("choose bus fare",["40-400","400-600" ,"600-800","800 and above"])
+        fare = st.number_input("Enter fare", min_value=40, max_value=5000, value=40, step=1)
+        #select_fare = st.number_input("Enter bus fare", min_value=40, max_value=5000, value=40, step=1)
     with col2:
-        select_rating=st.selectbox("choose rating",["5","4","rating not an issue","off"])
+        select_rating = st.slider("Choose rating", min_value=1, max_value=5, value=5, step=1)
     with col1:
         TIME=st.time_input("select the time")  
     #time_str=TIME.strftime("%H:%M:%S")  
@@ -289,41 +290,37 @@ if menu=="Bus Routes":
             my_cursor=conn.cursor()
             
             #filtration for rating
-            if rate_range=="5":
-                rate_min,rate_max=4.2,5
-            elif rate_range=='4':
-                rate_min,rate_max=3.0,4.2
-            elif rate_range=="rating not an issue":
-                rate_min,rate_max=2.0,3.9
-            else:
-                rate_min,rate_max=0,5    
-            
-            #filteration for fare,bustype and rating
-            
-            if fare_range == "40-400":
-                fare_min,fare_max=40,400
-            
-            elif fare_range=="400-600":
-                fare_min,fare_max=400,600
-            elif fare_range=="600-800":
-                fare_min,fare_max=600,800
-            else:
-                fare_min,fare_max=800, 5000
+            rate_min, rate_max = 0, 5  # Default range
+            if rate_range == 5:
+                rate_min, rate_max = 4.2, 5
+            elif rate_range == 4:
+                rate_min, rate_max = 3.0, 4.2
+            elif rate_range == 3:
+                rate_min, rate_max = 2.0, 3.0
+            elif rate_range == 2:
+                rate_min, rate_max = 1.0, 2.0
+            elif rate_range == 1:
+                rate_min, rate_max = 0, 1.0
+                #filteration for fare,bustype and rating
             
             
             #define bus type condition
             if bus_type=="sleeper":
                 bus_type_option = "bustype LIKE '%Sleeper%'"
             elif bus_type=="semi-sleeper":
-                bus_type_option = "bustype LIKE '%A/c Semi Sleeper %'"
+                bus_type_option = "bustype LIKE '%Semi Sleeper %'"
+            elif bus_type=="A/C":
+                bus_type_option = "bustype LIKE '% A/C %'"
+            elif bus_type=="NON A/C":
+                bus_type_option = "bustype LIKE '% NON A/C% '"
             elif bus_type=="seater":
                 bus_type_option = "bustype LIKE '% Seater %'"
             else:
-                bus_type_option = "bustype NOT LIKE '%Sleeper' AND bustype NOT LIKE '%Semi-Sleeper' AND bustype NOT LIKE '% Seater %'"
+                bus_type_option = "bustype NOT LIKE '%Sleeper' AND bustype NOT LIKE '%Semi-Sleeper %' AND bustype NOT LIKE '% Seater %' AND bustype NOT LIKE '% A/C%' AND bustype NOT LIKE '%NON A/C %'"
             
             sqlquery= f""" 
                 SELECT * FROM busdetail
-                WHERE price BETWEEN {fare_min} AND {fare_max}
+                WHERE price <= {fare}
                 AND route_name = '{k}' 
                 AND {bus_type_option} AND departing_time >= '{TIME}'
                 AND star_rating BETWEEN {rate_min} and {rate_max}
@@ -339,7 +336,7 @@ if menu=="Bus Routes":
             ])
             
             return df
-        df_result = type_and_fare(select_type,select_fare,select_rating)
+        df_result = type_and_fare(select_type,fare,select_rating)
         st.subheader("""
                     :blue[:material/resume:] :green[Result]
                     """)
@@ -358,45 +355,39 @@ if menu=="Bus Routes":
             my_cursor=conn.cursor()
             
             #filtration for rating
+            rate_min, rate_max = 0, 5  # Default range
+            if rate_range == 5:
+                rate_min, rate_max = 4.2, 5
+            elif rate_range == 4:
+                rate_min, rate_max = 3.0, 4.2
+            elif rate_range == 3:
+                rate_min, rate_max = 2.0, 3.0
+            elif rate_range == 2:
+                rate_min, rate_max = 1.0, 2.0
+            elif rate_range == 1:
+                rate_min, rate_max = 0, 1.0
+                #filteration for fare,bustype and rating
             
-            if rate_range=="5":
-                rate_min,rate_max=4.2,5
-            elif rate_range=='4':
-                rate_min,rate_max=3.0,4.2
-            elif rate_range=="rating not an issue":
-                rate_min,rate_max=2.0,3.9
-            else:
-                rate_min,rate_max=0,5    
-             
-            #filteration for fare,bustype and rating
-            
-               
-            if fare_range == "40-400":
-                fare_min,fare_max=40,400
-            
-            elif fare_range=="400-600":
-                fare_min,fare_max=400,600
-            elif fare_range=="600-800":
-                fare_min,fare_max=600,800
-            else:
-                fare_min,fare_max=800, 5000
-         
             
             #define bus type condition
             if bus_type=="sleeper":
                 bus_type_option = "bustype LIKE '%Sleeper%'"
             elif bus_type=="semi-sleeper":
-                bus_type_option = "bustype LIKE '%A/c Semi Sleeper %'"
+                bus_type_option = "bustype LIKE '%Semi Sleeper %'"
+            elif bus_type=="A/C":
+                bus_type_option = "bustype LIKE '% A/C %'"
+            elif bus_type=="NON A/C":
+                bus_type_option = "bustype LIKE '% NON A/C% '"
             elif bus_type=="seater":
                 bus_type_option = "bustype LIKE '% Seater %'"
             else:
-                bus_type_option = "bustype NOT LIKE '%Sleeper' AND bustype NOT LIKE '%Semi-Sleeper' AND bustype NOT LIKE '% Seater %'"
+                bus_type_option = "bustype NOT LIKE '%Sleeper' AND bustype NOT LIKE '%Semi-Sleeper %' AND bustype NOT LIKE '% Seater %' AND bustype NOT LIKE '% A/C%' AND bustype NOT LIKE '%NON A/C %'"
             
             sqlquery= f""" 
                 SELECT * FROM busdetail
-                WHERE price BETWEEN {fare_min} AND {fare_max}
+                WHERE price <= {fare}
                 AND route_name = '{k}' 
-                AND {bus_type_option} AND departing_time>= '{TIME}'
+                AND {bus_type_option} AND departing_time >= '{TIME}'
                 AND star_rating BETWEEN {rate_min} and {rate_max}
                 ORDER BY price and departing_time DESC
             """
@@ -410,7 +401,7 @@ if menu=="Bus Routes":
             ])
             
             return df
-        df_result2 = type_and_fare(select_type,select_fare,select_rating)
+        df_result2 = type_and_fare(select_type,fare,select_rating)
         st.subheader("""
                     :blue[:material/resume:] :green[Result]
                     """)
@@ -429,45 +420,39 @@ if menu=="Bus Routes":
             my_cursor=conn.cursor()
             
             #filtration for rating
+            rate_min, rate_max = 0, 5  # Default range
+            if rate_range == 5:
+                rate_min, rate_max = 4.2, 5
+            elif rate_range == 4:
+                rate_min, rate_max = 3.0, 4.2
+            elif rate_range == 3:
+                rate_min, rate_max = 2.0, 3.0
+            elif rate_range == 2:
+                rate_min, rate_max = 1.0, 2.0
+            elif rate_range == 1:
+                rate_min, rate_max = 0, 1.0
+                #filteration for fare,bustype and rating
             
-            if rate_range=="5":
-                rate_min,rate_max=4.2,5
-            elif rate_range=='4':
-                rate_min,rate_max=3.0,4.2
-            elif rate_range=="rating not an issue":
-                rate_min,rate_max=2.0,3.9
-            else:
-                rate_min,rate_max=0,5    
-             
-            #filteration for fare,bustype and rating
-            
-               
-            if fare_range == "40-400":
-                fare_min,fare_max=40,400
-            
-            elif fare_range=="400-600":
-                fare_min,fare_max=400,600
-            elif fare_range=="600-800":
-                fare_min,fare_max=600,800
-            else:
-                fare_min,fare_max=800, 5000
-         
             
             #define bus type condition
             if bus_type=="sleeper":
                 bus_type_option = "bustype LIKE '%Sleeper%'"
             elif bus_type=="semi-sleeper":
-                bus_type_option = "bustype LIKE '%A/c Semi Sleeper %'"
+                bus_type_option = "bustype LIKE '%Semi Sleeper %'"
+            elif bus_type=="A/C":
+                bus_type_option = "bustype LIKE '% A/C %'"
+            elif bus_type=="NON A/C":
+                bus_type_option = "bustype LIKE '% NON A/C% '"
             elif bus_type=="seater":
                 bus_type_option = "bustype LIKE '% Seater %'"
             else:
-                bus_type_option = "bustype NOT LIKE '%Sleeper' AND bustype NOT LIKE '%Semi-Sleeper' AND bustype NOT LIKE '% Seater %'"
+                bus_type_option = "bustype NOT LIKE '%Sleeper' AND bustype NOT LIKE '%Semi-Sleeper %' AND bustype NOT LIKE '% Seater %' AND bustype NOT LIKE '% A/C%' AND bustype NOT LIKE '%NON A/C %'"
             
             sqlquery= f""" 
                 SELECT * FROM busdetail
-                WHERE price BETWEEN {fare_min} AND {fare_max}
+                WHERE price <= {fare}
                 AND route_name = '{k}' 
-                AND {bus_type_option} AND departing_time>= '{TIME}'
+                AND {bus_type_option} AND departing_time >= '{TIME}'
                 AND star_rating BETWEEN {rate_min} and {rate_max}
                 ORDER BY price and departing_time DESC
             """
@@ -481,7 +466,7 @@ if menu=="Bus Routes":
             ])
             
             return df
-        df_result2 = type_and_fare(select_type,select_fare,select_rating)
+        df_result2 = type_and_fare(select_type,fare,select_rating)
         st.subheader("""
                     :blue[:material/resume:] :green[Result]
                     """)
@@ -500,43 +485,39 @@ if menu=="Bus Routes":
             my_cursor=conn.cursor()
             
             #filtration for rating
-            if rate_range=="5":
-                rate_min,rate_max=4.2,5
-            elif rate_range=='4':
-                rate_min,rate_max=3.0,4.2
-            elif rate_range=="rating not an issue":
-                rate_min,rate_max=2.0,3.9
-            else:
-                rate_min,rate_max=0,5    
-                
-            #filteration for fare,bustype and rating
-               
-            if fare_range == "40-400":
-                fare_min,fare_max=40,400
+            rate_min, rate_max = 0, 5  # Default range
+            if rate_range == 5:
+                rate_min, rate_max = 4.2, 5
+            elif rate_range == 4:
+                rate_min, rate_max = 3.0, 4.2
+            elif rate_range == 3:
+                rate_min, rate_max = 2.0, 3.0
+            elif rate_range == 2:
+                rate_min, rate_max = 1.0, 2.0
+            elif rate_range == 1:
+                rate_min, rate_max = 0, 1.0
+                #filteration for fare,bustype and rating
             
-            elif fare_range=="400-600":
-                fare_min,fare_max=400,600
-            elif fare_range=="600-800":
-                fare_min,fare_max=600,800
-            else:
-                fare_min,fare_max=800, 5000
-         
             
             #define bus type condition
             if bus_type=="sleeper":
                 bus_type_option = "bustype LIKE '%Sleeper%'"
             elif bus_type=="semi-sleeper":
-                bus_type_option = "bustype LIKE '%A/c Semi Sleeper %'"
+                bus_type_option = "bustype LIKE '%Semi Sleeper %'"
+            elif bus_type=="A/C":
+                bus_type_option = "bustype LIKE '% A/C %'"
+            elif bus_type=="NON A/C":
+                bus_type_option = "bustype LIKE '% NON A/C% '"
             elif bus_type=="seater":
                 bus_type_option = "bustype LIKE '% Seater %'"
             else:
-                bus_type_option = "bustype NOT LIKE '%Sleeper' AND bustype NOT LIKE '%Semi-Sleeper' AND bustype NOT LIKE '% Seater %'"
+                bus_type_option = "bustype NOT LIKE '%Sleeper' AND bustype NOT LIKE '%Semi-Sleeper %' AND bustype NOT LIKE '% Seater %' AND bustype NOT LIKE '% A/C%' AND bustype NOT LIKE '%NON A/C %'"
             
             sqlquery= f""" 
                 SELECT * FROM busdetail
-                WHERE price BETWEEN {fare_min} AND {fare_max}
+                WHERE price <= {fare}
                 AND route_name = '{k}' 
-                AND {bus_type_option} AND departing_time>= '{TIME}'
+                AND {bus_type_option} AND departing_time >= '{TIME}'
                 AND star_rating BETWEEN {rate_min} and {rate_max}
                 ORDER BY price and departing_time DESC
             """
@@ -550,7 +531,7 @@ if menu=="Bus Routes":
             ])
             
             return df
-        df_result = type_and_fare(select_type,select_fare,select_rating)
+        df_result = type_and_fare(select_type,fare,select_rating)
         st.subheader("""
                     :blue[:material/resume:] :green[Result]
                     """)
@@ -570,42 +551,39 @@ if menu=="Bus Routes":
             my_cursor=conn.cursor()
             
             #filtration for rating
-            if rate_range=="5":
-                rate_min,rate_max=4.2,5
-            elif rate_range=='4':
-                rate_min,rate_max=3.0,4.2
-            elif rate_range=="rating not an issue":
-                rate_min,rate_max=2.0,3.9
-            else:
-                rate_min,rate_max=0,5    
+            rate_min, rate_max = 0, 5  # Default range
+            if rate_range == 5:
+                rate_min, rate_max = 4.2, 5
+            elif rate_range == 4:
+                rate_min, rate_max = 3.0, 4.2
+            elif rate_range == 3:
+                rate_min, rate_max = 2.0, 3.0
+            elif rate_range == 2:
+                rate_min, rate_max = 1.0, 2.0
+            elif rate_range == 1:
+                rate_min, rate_max = 0, 1.0
+                #filteration for fare,bustype and rating
             
-            #filteration for fare,bustype and rating
-               
-            if fare_range == "40-400":
-                fare_min,fare_max=40,400
             
-            elif fare_range=="400-600":
-                fare_min,fare_max=400,600
-            elif fare_range=="600-800":
-                fare_min,fare_max=600,800
-            else:
-                fare_min,fare_max=800, 5000
-         
             #define bus type condition
             if bus_type=="sleeper":
                 bus_type_option = "bustype LIKE '%Sleeper%'"
             elif bus_type=="semi-sleeper":
-                bus_type_option = "bustype LIKE '%A/c Semi Sleeper %'"
+                bus_type_option = "bustype LIKE '%Semi Sleeper %'"
+            elif bus_type=="A/C":
+                bus_type_option = "bustype LIKE '% A/C %'"
+            elif bus_type=="NON A/C":
+                bus_type_option = "bustype LIKE '% NON A/C% '"
             elif bus_type=="seater":
                 bus_type_option = "bustype LIKE '% Seater %'"
             else:
-                bus_type_option = "bustype NOT LIKE '%Sleeper' AND bustype NOT LIKE '%Semi-Sleeper' AND bustype NOT LIKE '% Seater %'"
+                bus_type_option = "bustype NOT LIKE '%Sleeper' AND bustype NOT LIKE '%Semi-Sleeper %' AND bustype NOT LIKE '% Seater %' AND bustype NOT LIKE '% A/C%' AND bustype NOT LIKE '%NON A/C %'"
             
             sqlquery= f""" 
                 SELECT * FROM busdetail
-                WHERE price BETWEEN {fare_min} AND {fare_max}
+                WHERE price <= {fare}
                 AND route_name = '{k}' 
-                AND {bus_type_option} AND departing_time>= '{TIME}'
+                AND {bus_type_option} AND departing_time >= '{TIME}'
                 AND star_rating BETWEEN {rate_min} and {rate_max}
                 ORDER BY price and departing_time DESC
             """
@@ -619,7 +597,7 @@ if menu=="Bus Routes":
             ])
             
             return df
-        df_result = type_and_fare(select_type,select_fare,select_rating)
+        df_result = type_and_fare(select_type,fare,select_rating)
         st.subheader("""
                     :blue[:material/resume:] :green[Result]
                     """)
@@ -638,45 +616,39 @@ if menu=="Bus Routes":
             my_cursor=conn.cursor()
             
             #filtration for rating
-            if rate_range=="5":
-                rate_min,rate_max=4.2,5
-            elif rate_range=='4':
-                rate_min,rate_max=3.0,4.2
-            elif rate_range=="rating not an issue":
-                rate_min,rate_max=2.0,3.9
-            else:
-                rate_min,rate_max=0,5    
-                
+            rate_min, rate_max = 0, 5  # Default range
+            if rate_range == 5:
+                rate_min, rate_max = 4.2, 5
+            elif rate_range == 4:
+                rate_min, rate_max = 3.0, 4.2
+            elif rate_range == 3:
+                rate_min, rate_max = 2.0, 3.0
+            elif rate_range == 2:
+                rate_min, rate_max = 1.0, 2.0
+            elif rate_range == 1:
+                rate_min, rate_max = 0, 1.0
+                #filteration for fare,bustype and rating
             
-            #filteration for fare,bustype and rating
-            
-               
-            if fare_range == "40-400":
-                fare_min,fare_max=40,400
-            
-            elif fare_range=="400-600":
-                fare_min,fare_max=400,600
-            elif fare_range=="600-800":
-                fare_min,fare_max=600,800
-            else:
-                fare_min,fare_max=800, 5000
-         
             
             #define bus type condition
             if bus_type=="sleeper":
                 bus_type_option = "bustype LIKE '%Sleeper%'"
             elif bus_type=="semi-sleeper":
-                bus_type_option = "bustype LIKE '%A/c Semi Sleeper %'"
+                bus_type_option = "bustype LIKE '%Semi Sleeper %'"
+            elif bus_type=="A/C":
+                bus_type_option = "bustype LIKE '% A/C %'"
+            elif bus_type=="NON A/C":
+                bus_type_option = "bustype LIKE '% NON A/C% '"
             elif bus_type=="seater":
                 bus_type_option = "bustype LIKE '% Seater %'"
             else:
-                bus_type_option = "bustype NOT LIKE '%Sleeper' AND bustype NOT LIKE '%Semi-Sleeper' AND bustype NOT LIKE '% Seater %'"
+                bus_type_option = "bustype NOT LIKE '%Sleeper' AND bustype NOT LIKE '%Semi-Sleeper %' AND bustype NOT LIKE '% Seater %' AND bustype NOT LIKE '% A/C%' AND bustype NOT LIKE '%NON A/C %'"
             
             sqlquery= f""" 
                 SELECT * FROM busdetail
-                WHERE price BETWEEN {fare_min} AND {fare_max}
+                WHERE price <= {fare}
                 AND route_name = '{k}' 
-                AND {bus_type_option} AND departing_time>= '{TIME}'
+                AND {bus_type_option} AND departing_time >= '{TIME}'
                 AND star_rating BETWEEN {rate_min} and {rate_max}
                 ORDER BY price and departing_time DESC
             """
@@ -690,7 +662,7 @@ if menu=="Bus Routes":
             ])
             
             return df
-        df_result = type_and_fare(select_type,select_fare,select_rating)
+        df_result = type_and_fare(select_type,fare,select_rating)
         st.subheader("""
                     :blue[:material/resume:] :green[Result]
                     """)
@@ -710,43 +682,39 @@ if menu=="Bus Routes":
             my_cursor=conn.cursor()
             
             #filtration for rating
-            if rate_range=="5":
-                rate_min,rate_max=4.2,5
-            elif rate_range=='4':
-                rate_min,rate_max=3.0,4.2
-            elif rate_range=="rating not an issue":
-                rate_min,rate_max=2.0,3.9
-            else:
-                rate_min,rate_max=0,5    
-                
+            rate_min, rate_max = 0, 5  # Default range
+            if rate_range == 5:
+                rate_min, rate_max = 4.2, 5
+            elif rate_range == 4:
+                rate_min, rate_max = 3.0, 4.2
+            elif rate_range == 3:
+                rate_min, rate_max = 2.0, 3.0
+            elif rate_range == 2:
+                rate_min, rate_max = 1.0, 2.0
+            elif rate_range == 1:
+                rate_min, rate_max = 0, 1.0
+                #filteration for fare,bustype and rating
             
-            #filteration for fare,bustype and rating
-               
-            if fare_range == "40-400":
-                fare_min,fare_max=40,400
             
-            elif fare_range=="400-600":
-                fare_min,fare_max=400,600
-            elif fare_range=="600-800":
-                fare_min,fare_max=600,800
-            else:
-                fare_min,fare_max=800, 5000
-         
             #define bus type condition
             if bus_type=="sleeper":
                 bus_type_option = "bustype LIKE '%Sleeper%'"
             elif bus_type=="semi-sleeper":
-                bus_type_option = "bustype LIKE '%A/c Semi Sleeper %'"
+                bus_type_option = "bustype LIKE '%Semi Sleeper %'"
+            elif bus_type=="A/C":
+                bus_type_option = "bustype LIKE '% A/C %'"
+            elif bus_type=="NON A/C":
+                bus_type_option = "bustype LIKE '% NON A/C% '"
             elif bus_type=="seater":
                 bus_type_option = "bustype LIKE '% Seater %'"
             else:
-                bus_type_option = "bustype NOT LIKE '%Sleeper' AND bustype NOT LIKE '%Semi-Sleeper' AND bustype NOT LIKE '% Seater %'"
+                bus_type_option = "bustype NOT LIKE '%Sleeper' AND bustype NOT LIKE '%Semi-Sleeper %' AND bustype NOT LIKE '% Seater %' AND bustype NOT LIKE '% A/C%' AND bustype NOT LIKE '%NON A/C %'"
             
             sqlquery= f""" 
                 SELECT * FROM busdetail
-                WHERE price BETWEEN {fare_min} AND {fare_max}
+                WHERE price <= {fare}
                 AND route_name = '{k}' 
-                AND {bus_type_option} AND departing_time>= '{TIME}'
+                AND {bus_type_option} AND departing_time >= '{TIME}'
                 AND star_rating BETWEEN {rate_min} and {rate_max}
                 ORDER BY price and departing_time DESC
             """
@@ -760,7 +728,7 @@ if menu=="Bus Routes":
             ])
             
             return df
-        df_result = type_and_fare(select_type,select_fare,select_rating)
+        df_result = type_and_fare(select_type,fare,select_rating)
         st.subheader("""
                     :blue[:material/resume:] :green[Result]
                     """)
@@ -779,47 +747,43 @@ if menu=="Bus Routes":
             my_cursor=conn.cursor()
             
             #filtration for rating
-            if rate_range=="5":
-                rate_min,rate_max=4.2,5
-            elif rate_range=='4':
-                rate_min,rate_max=3.0,4.2
-            elif rate_range=="rating not an issue":
-                rate_min,rate_max=2.0,3.9
-            else:
-                rate_min,rate_max=0,5    
-             
-            #filteration for fare,bustype and rating
+            rate_min, rate_max = 0, 5  # Default range
+            if rate_range == 5:
+                rate_min, rate_max = 4.2, 5
+            elif rate_range == 4:
+                rate_min, rate_max = 3.0, 4.2
+            elif rate_range == 3:
+                rate_min, rate_max = 2.0, 3.0
+            elif rate_range == 2:
+                rate_min, rate_max = 1.0, 2.0
+            elif rate_range == 1:
+                rate_min, rate_max = 0, 1.0
+                #filteration for fare,bustype and rating
             
-               
-            if fare_range == "40-400":
-                fare_min,fare_max=40,400
-            
-            elif fare_range=="400-600":
-                fare_min,fare_max=400,600
-            elif fare_range=="600-800":
-                fare_min,fare_max=600,800
-            else:
-                fare_min,fare_max=800, 5000
-         
             
             #define bus type condition
             if bus_type=="sleeper":
                 bus_type_option = "bustype LIKE '%Sleeper%'"
             elif bus_type=="semi-sleeper":
-                bus_type_option = "bustype LIKE '%A/c Semi Sleeper %'"
+                bus_type_option = "bustype LIKE '%Semi Sleeper %'"
+            elif bus_type=="A/C":
+                bus_type_option = "bustype LIKE '% A/C %'"
+            elif bus_type=="NON A/C":
+                bus_type_option = "bustype LIKE '% NON A/C% '"
             elif bus_type=="seater":
                 bus_type_option = "bustype LIKE '% Seater %'"
             else:
-                bus_type_option = "bustype NOT LIKE '%Sleeper' AND bustype NOT LIKE '%Semi-Sleeper' AND bustype NOT LIKE '% Seater %'"
+                bus_type_option = "bustype NOT LIKE '%Sleeper' AND bustype NOT LIKE '%Semi-Sleeper %' AND bustype NOT LIKE '% Seater %' AND bustype NOT LIKE '% A/C%' AND bustype NOT LIKE '%NON A/C %'"
             
             sqlquery= f""" 
                 SELECT * FROM busdetail
-                WHERE price BETWEEN {fare_min} AND {fare_max}
+                WHERE price <= {fare}
                 AND route_name = '{k}' 
-                AND {bus_type_option} AND departing_time>= '{TIME}'
+                AND {bus_type_option} AND departing_time >= '{TIME}'
                 AND star_rating BETWEEN {rate_min} and {rate_max}
                 ORDER BY price and departing_time DESC
             """
+            
             
             my_cursor.execute(sqlquery)
             out=my_cursor.fetchall()
@@ -830,7 +794,7 @@ if menu=="Bus Routes":
             ])
             
             return df
-        df_result = type_and_fare(select_type,select_fare,select_rating)
+        df_result = type_and_fare(select_type,fare,select_rating)
         st.subheader("""
                     :blue[:material/resume:] :green[Result]
                     """)
@@ -849,47 +813,43 @@ if menu=="Bus Routes":
             my_cursor=conn.cursor()
             
             #filtration for rating
-            if rate_range=="5":
-                rate_min,rate_max=4.2,5
-            elif rate_range=='4':
-                rate_min,rate_max=3.0,4.2
-            elif rate_range=="rating not an issue":
-                rate_min,rate_max=2.0,3.9
-            else:
-                rate_min,rate_max=0,5    
-                
-                
-            #filteration for fare,bustype and rating
-               
-            if fare_range == "40-400":
-                fare_min,fare_max=40,400
+            rate_min, rate_max = 0, 5  # Default range
+            if rate_range == 5:
+                rate_min, rate_max = 4.2, 5
+            elif rate_range == 4:
+                rate_min, rate_max = 3.0, 4.2
+            elif rate_range == 3:
+                rate_min, rate_max = 2.0, 3.0
+            elif rate_range == 2:
+                rate_min, rate_max = 1.0, 2.0
+            elif rate_range == 1:
+                rate_min, rate_max = 0, 1.0
+                #filteration for fare,bustype and rating
             
-            elif fare_range=="400-600":
-                fare_min,fare_max=400,600
-            elif fare_range=="600-800":
-                fare_min,fare_max=600,800
-            else:
-                fare_min,fare_max=800, 5000
-         
             
             #define bus type condition
             if bus_type=="sleeper":
                 bus_type_option = "bustype LIKE '%Sleeper%'"
             elif bus_type=="semi-sleeper":
-                bus_type_option = "bustype LIKE '%A/c Semi Sleeper %'"
+                bus_type_option = "bustype LIKE '%Semi Sleeper %'"
+            elif bus_type=="A/C":
+                bus_type_option = "bustype LIKE '% A/C %'"
+            elif bus_type=="NON A/C":
+                bus_type_option = "bustype LIKE '% NON A/C% '"
             elif bus_type=="seater":
                 bus_type_option = "bustype LIKE '% Seater %'"
             else:
-                bus_type_option = "bustype NOT LIKE '%Sleeper' AND bustype NOT LIKE '%Semi-Sleeper' AND bustype NOT LIKE '% Seater %'"
+                bus_type_option = "bustype NOT LIKE '%Sleeper' AND bustype NOT LIKE '%Semi-Sleeper %' AND bustype NOT LIKE '% Seater %' AND bustype NOT LIKE '% A/C%' AND bustype NOT LIKE '%NON A/C %'"
             
             sqlquery= f""" 
                 SELECT * FROM busdetail
-                WHERE price BETWEEN {fare_min} AND {fare_max}
+                WHERE price <= {fare}
                 AND route_name = '{k}' 
-                AND {bus_type_option} AND departing_time>= '{TIME}'
+                AND {bus_type_option} AND departing_time >= '{TIME}'
                 AND star_rating BETWEEN {rate_min} and {rate_max}
                 ORDER BY price and departing_time DESC
             """
+            
             
             my_cursor.execute(sqlquery)
             out=my_cursor.fetchall()
@@ -900,7 +860,7 @@ if menu=="Bus Routes":
             ])
             
             return df
-        df_result = type_and_fare(select_type,select_fare,select_rating)
+        df_result = type_and_fare(select_type,fare,select_rating)
         st.subheader("""
                     :blue[:material/resume:] :green[Result]
                     """)
@@ -918,46 +878,43 @@ if menu=="Bus Routes":
             my_cursor=conn.cursor()
             
             #filtration for rating
-            if rate_range=="5":
-                rate_min,rate_max=4.2,5
-            elif rate_range=='4':
-                rate_min,rate_max=3.0,4.2
-            elif rate_range=="rating not an issue":
-                rate_min,rate_max=2.0,3.9
-            else:
-                rate_min,rate_max=0,5    
-                
-                  
-            #filteration for fare,bustype and rating
-               
-            if fare_range == "40-400":
-                fare_min,fare_max=40,400
+            rate_min, rate_max = 0, 5  # Default range
+            if rate_range == 5:
+                rate_min, rate_max = 4.2, 5
+            elif rate_range == 4:
+                rate_min, rate_max = 3.0, 4.2
+            elif rate_range == 3:
+                rate_min, rate_max = 2.0, 3.0
+            elif rate_range == 2:
+                rate_min, rate_max = 1.0, 2.0
+            elif rate_range == 1:
+                rate_min, rate_max = 0, 1.0
+                #filteration for fare,bustype and rating
             
-            elif fare_range=="400-600":
-                fare_min,fare_max=400,600
-            elif fare_range=="600-800":
-                fare_min,fare_max=600,800
-            else:
-                fare_min,fare_max=800, 5000
-         
+            
             #define bus type condition
             if bus_type=="sleeper":
                 bus_type_option = "bustype LIKE '%Sleeper%'"
             elif bus_type=="semi-sleeper":
-                bus_type_option = "bustype LIKE '%A/c Semi Sleeper %'"
+                bus_type_option = "bustype LIKE '%Semi Sleeper %'"
+            elif bus_type=="A/C":
+                bus_type_option = "bustype LIKE '% A/C %'"
+            elif bus_type=="NON A/C":
+                bus_type_option = "bustype LIKE '% NON A/C% '"
             elif bus_type=="seater":
                 bus_type_option = "bustype LIKE '% Seater %'"
             else:
-                bus_type_option = "bustype NOT LIKE '%Sleeper' AND bustype NOT LIKE '%Semi-Sleeper' AND bustype NOT LIKE '% Seater %'"
+                bus_type_option = "bustype NOT LIKE '%Sleeper' AND bustype NOT LIKE '%Semi-Sleeper %' AND bustype NOT LIKE '% Seater %' AND bustype NOT LIKE '% A/C%' AND bustype NOT LIKE '%NON A/C %'"
             
             sqlquery= f""" 
                 SELECT * FROM busdetail
-                WHERE price BETWEEN {fare_min} AND {fare_max}
+                WHERE price <= {fare}
                 AND route_name = '{k}' 
-                AND {bus_type_option} AND departing_time>= '{TIME}'
+                AND {bus_type_option} AND departing_time >= '{TIME}'
                 AND star_rating BETWEEN {rate_min} and {rate_max}
                 ORDER BY price and departing_time DESC
             """
+            
             
             my_cursor.execute(sqlquery)
             out=my_cursor.fetchall()
@@ -968,7 +925,7 @@ if menu=="Bus Routes":
             ])
             
             return df
-        df_result = type_and_fare(select_type,select_fare,select_rating)
+        df_result = type_and_fare(select_type,fare,select_rating)
         st.subheader("""
                     :blue[:material/resume:] :green[Result]
                     """)
@@ -989,44 +946,39 @@ if menu=="Bus Routes":
             
             #filtration for rating
             
-            if rate_range=="5":
-                rate_min,rate_max=4.2,5
-            elif rate_range=='4':
-                rate_min,rate_max=3.0,4.2
-            elif rate_range=="rating not an issue":
-                rate_min,rate_max=2.0,3.9
-            else:
-                rate_min,rate_max=0,5    
-                
+            rate_min, rate_max = 0, 5  # Default range
+            if rate_range == 5:
+                rate_min, rate_max = 4.2, 5
+            elif rate_range == 4:
+                rate_min, rate_max = 3.0, 4.2
+            elif rate_range == 3:
+                rate_min, rate_max = 2.0, 3.0
+            elif rate_range == 2:
+                rate_min, rate_max = 1.0, 2.0
+            elif rate_range == 1:
+                rate_min, rate_max = 0, 1.0
+                #filteration for fare,bustype and rating
             
-            #filteration for fare,bustype and rating
-               
-            if fare_range == "40-400":
-                fare_min,fare_max=40,400
-            
-            elif fare_range=="400-600":
-                fare_min,fare_max=400,600
-            elif fare_range=="600-800":
-                fare_min,fare_max=600,800
-            else:
-                fare_min,fare_max=800, 5000
-         
             
             #define bus type condition
             if bus_type=="sleeper":
                 bus_type_option = "bustype LIKE '%Sleeper%'"
             elif bus_type=="semi-sleeper":
-                bus_type_option = "bustype LIKE '%A/c Semi Sleeper %'"
+                bus_type_option = "bustype LIKE '%Semi Sleeper %'"
+            elif bus_type=="A/C":
+                bus_type_option = "bustype LIKE '% A/C %'"
+            elif bus_type=="NON A/C":
+                bus_type_option = "bustype LIKE '% NON A/C% '"
             elif bus_type=="seater":
                 bus_type_option = "bustype LIKE '% Seater %'"
             else:
-                bus_type_option = "bustype NOT LIKE '%Sleeper' AND bustype NOT LIKE '%Semi-Sleeper' AND bustype NOT LIKE '% Seater %'"
+                bus_type_option = "bustype NOT LIKE '%Sleeper' AND bustype NOT LIKE '%Semi-Sleeper %' AND bustype NOT LIKE '% Seater %' AND bustype NOT LIKE '% A/C%' AND bustype NOT LIKE '%NON A/C %'"
             
             sqlquery= f""" 
                 SELECT * FROM busdetail
-                WHERE price BETWEEN {fare_min} AND {fare_max}
+                WHERE price <= {fare}
                 AND route_name = '{k}' 
-                AND {bus_type_option} AND departing_time>= '{TIME}'
+                AND {bus_type_option} AND departing_time >= '{TIME}'
                 AND star_rating BETWEEN {rate_min} and {rate_max}
                 ORDER BY price and departing_time DESC
             """
@@ -1040,7 +992,7 @@ if menu=="Bus Routes":
             ])
             
             return df
-        df_result = type_and_fare(select_type,select_fare,select_rating)
+        df_result = type_and_fare(select_type,fare,select_rating)
         st.subheader("""
                     :blue[:material/resume:] :green[Result]
                     """)
