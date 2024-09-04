@@ -287,7 +287,7 @@ if menu=="Bus Routes":
         #CREATE A FUNCTION FOR CONNNECTION TO SQL FILTERATION
         
         def type_and_fare(bus_type, fare_range,rate_range):
-            conn=mysql.connector.connect(host="gateway01.ap-southeast-1.prod.aws.tidbcloud.com",user="2NWb96BauSzhCfv.root",password="glYD5rr41K6XQFlI",database="project",port=4000)
+            conn=mysql.connector.connect(host="gateway01.ap-southeast-1.prod.aws.tidbcloud.com",user="2NWb96BauSzhCfv.root",password="FlKt7G8RKi0SOme7",database="project",port=4000)
             my_cursor=conn.cursor()
             
             #filtration for rating
@@ -352,7 +352,7 @@ if menu=="Bus Routes":
         #CREATE A FUNCTION FOR CONNNECTION TO SQL FILTERATION
         
         def type_and_fare(bus_type, fare_range,rate_range):
-            conn=mysql.connector.connect(host="gateway01.ap-southeast-1.prod.aws.tidbcloud.com",user="2NWb96BauSzhCfv.root",password="bF59ujD5pIrInIaJ",database="project",port=4000)
+            conn=mysql.connector.connect(host="gateway01.ap-southeast-1.prod.aws.tidbcloud.com",user="2NWb96BauSzhCfv.root",password="FlKt7G8RKi0SOme7",database="project",port=4000)
             my_cursor=conn.cursor()
             
             #filtration for rating
@@ -417,7 +417,7 @@ if menu=="Bus Routes":
         #CREATE A FUNCTION FOR CONNNECTION TO SQL FILTERATION
         
         def type_and_fare(bus_type, fare_range,rate_range):
-            conn=mysql.connector.connect(host="gateway01.ap-southeast-1.prod.aws.tidbcloud.com",user="2NWb96BauSzhCfv.root",password="glYD5rr41K6XQFlI",database="project",port=4000)
+            conn=mysql.connector.connect(host="gateway01.ap-southeast-1.prod.aws.tidbcloud.com",user="2NWb96BauSzhCfv.root",password="FlKt7G8RKi0SOme7",database="project",port=4000)
             my_cursor=conn.cursor()
             
             #filtration for rating
@@ -482,7 +482,7 @@ if menu=="Bus Routes":
         #CREATE A FUNCTION FOR CONNNECTION TO SQL FILTERATION
         
         def type_and_fare(bus_type, fare_range,rate_range):
-            conn=mysql.connector.connect(host="gateway01.ap-southeast-1.prod.aws.tidbcloud.com",user="2NWb96BauSzhCfv.root",password="glYD5rr41K6XQFlI",database="project",port=4000)
+            conn=mysql.connector.connect(host="gateway01.ap-southeast-1.prod.aws.tidbcloud.com",user="2NWb96BauSzhCfv.root",password="FlKt7G8RKi0SOme7",database="project",port=4000)
             my_cursor=conn.cursor()
             
             #filtration for rating
@@ -548,7 +548,7 @@ if menu=="Bus Routes":
         #CREATE A FUNCTION FOR CONNNECTION TO SQL FILTERATION
         
         def type_and_fare(bus_type, fare_range,rate_range):
-            conn=mysql.connector.connect(host="gateway01.ap-southeast-1.prod.aws.tidbcloud.com",user="2NWb96BauSzhCfv.root",password="glYD5rr41K6XQFlI",database="project",port=4000)
+            conn=mysql.connector.connect(host="gateway01.ap-southeast-1.prod.aws.tidbcloud.com",user="2NWb96BauSzhCfv.root",password="FlKt7G8RKi0SOme7",database="project",port=4000)
             my_cursor=conn.cursor()
             
             #filtration for rating
@@ -613,7 +613,7 @@ if menu=="Bus Routes":
         #CREATE A FUNCTION FOR CONNNECTION TO SQL FILTERATION
         
         def type_and_fare(bus_type, fare_range,rate_range):
-            conn=mysql.connector.connect(host="gateway01.ap-southeast-1.prod.aws.tidbcloud.com",user="2NWb96BauSzhCfv.root",password="glYD5rr41K6XQFlI",database="project",port=4000)
+            conn=mysql.connector.connect(host="gateway01.ap-southeast-1.prod.aws.tidbcloud.com",user="2NWb96BauSzhCfv.root",password="FlKt7G8RKi0SOme7",database="project",port=4000)
             my_cursor=conn.cursor()
             
             #filtration for rating
@@ -679,7 +679,7 @@ if menu=="Bus Routes":
         #CREATE A FUNCTION FOR CONNNECTION TO SQL FILTERATION
         
         def type_and_fare(bus_type, fare_range,rate_range):
-            conn=mysql.connector.connect(host="gateway01.ap-southeast-1.prod.aws.tidbcloud.com",user="2NWb96BauSzhCfv.root",password="glYD5rr41K6XQFlI",database="project",port=4000)
+            conn=mysql.connector.connect(host="gateway01.ap-southeast-1.prod.aws.tidbcloud.com",user="2NWb96BauSzhCfv.root",password="FlKt7G8RKi0SOme7",database="project",port=4000)
             my_cursor=conn.cursor()
             
             #filtration for rating
@@ -744,7 +744,7 @@ if menu=="Bus Routes":
         #CREATE A FUNCTION FOR CONNNECTION TO SQL FILTERATION
         
         def type_and_fare(bus_type, fare_range,rate_range):
-            conn=mysql.connector.connect(host="gateway01.ap-southeast-1.prod.aws.tidbcloud.com",user="2NWb96BauSzhCfv.root",password="glYD5rr41K6XQFlI",database="project",port=4000)
+            conn=mysql.connector.connect(host="gateway01.ap-southeast-1.prod.aws.tidbcloud.com",user="2NWb96BauSzhCfv.root",password="FlKt7G8RKi0SOme7",database="project",port=4000)
             my_cursor=conn.cursor()
             
             #filtration for rating
@@ -810,7 +810,7 @@ if menu=="Bus Routes":
         #CREATE A FUNCTION FOR CONNNECTION TO SQL FILTERATION
         
         def type_and_fare(bus_type, fare_range,rate_range):
-            conn=mysql.connector.connect(host="gateway01.ap-southeast-1.prod.aws.tidbcloud.com",user="2NWb96BauSzhCfv.root",password="glYD5rr41K6XQFlI",database="project",port=4000)
+            conn=mysql.connector.connect(host="gateway01.ap-southeast-1.prod.aws.tidbcloud.com",user="2NWb96BauSzhCfv.root",password="FlKt7G8RKi0SOme7",database="project",port=4000)
             my_cursor=conn.cursor()
             
             #filtration for rating
@@ -875,7 +875,7 @@ if menu=="Bus Routes":
         #CREATE A FUNCTION FOR CONNNECTION TO SQL FILTERATION
         
         def type_and_fare(bus_type, fare_range,rate_range):
-            conn=mysql.connector.connect(host="gateway01.ap-southeast-1.prod.aws.tidbcloud.com",user="2NWb96BauSzhCfv.root",password="glYD5rr41K6XQFlI",database="project",port=4000)
+            conn=mysql.connector.connect(host="gateway01.ap-southeast-1.prod.aws.tidbcloud.com",user="2NWb96BauSzhCfv.root",password="FlKt7G8RKi0SOme7",database="project",port=4000)
             my_cursor=conn.cursor()
             
             #filtration for rating
@@ -942,7 +942,7 @@ if menu=="Bus Routes":
         #CREATE A FUNCTION FOR CONNNECTION TO SQL FILTERATION
         
         def type_and_fare(bus_type, fare_range,rate_range):
-            conn=mysql.connector.connect(host="gateway01.ap-southeast-1.prod.aws.tidbcloud.com",user="2NWb96BauSzhCfv.root",password="glYD5rr41K6XQFlI",database="project",port=4000)
+            conn=mysql.connector.connect(host="gateway01.ap-southeast-1.prod.aws.tidbcloud.com",user="2NWb96BauSzhCfv.root",password="FlKt7G8RKi0SOme7",database="project",port=4000)
             my_cursor=conn.cursor()
             
             #filtration for rating
